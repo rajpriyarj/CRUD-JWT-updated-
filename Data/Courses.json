@@ -2,15 +2,33 @@
   {
     "name": "me",
     "description": "xyz",
-    "enrolledStudents": [],
-    "availableSlots": 0,
+    "enrolledStudents": [
+      {
+        "id": 2,
+        "name": "IRON MAN"
+      },
+      {
+        "id": 1,
+        "name": "Raj Priya"
+      }
+    ],
+    "availableSlots": 1,
     "id": 1
   },
   {
     "name": "IT",
     "description": "xyz",
-    "enrolledStudents": [],
-    "availableSlots": 10,
+    "enrolledStudents": [
+      {
+        "id": 3,
+        "name": "Avengers"
+      },
+      {
+        "id": 3,
+        "name": "Avengers"
+      }
+    ],
+    "availableSlots": 8,
     "id": 2
   }
 ]

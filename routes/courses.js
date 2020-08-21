@@ -44,13 +44,15 @@ router.post('/:id/enroll', checkToken, (req,res)=>{
     const studentName = req.body.name;
     let courses = JSON.parse(fs.readFileSync(path));
     let students = JSON.parse(fs.readFileSync(studentPath));
+    let curr_course;
+    let curr_student;
     students.forEach(student =>{
-        if (student.id == studentId){
+        if(student.id == studentId){
+            curr_student = 1
             courses.forEach(course=>{
                 if (course.id==courseId){
                     curr_course=1
-
-                    if (course["enrolledStudents"].indexOf(student) > -1) {
+                    if (course["enrolledStudents"].indexOf(studentId) > -1) {
                         console.log('here')
                         res.send('Student already enrolled in this course!')
                     }else{
@@ -62,42 +64,58 @@ router.post('/:id/enroll', checkToken, (req,res)=>{
                             })
                             res.send('Student enrolled successfully')
                             fs.writeFileSync(path, JSON.stringify(courses, null, 2))
+                        }else{
+                            res.send('No slots available for this course!')
                         }
                     }
-                }else{
-                    res.send("No course available with such id.")
                 }
             })
-        }else{
-            res.send("There is no student with such id")
+            if (!curr_course){
+                res.send('No course found for this id!')
+            }
         }
     })
+    if (!curr_student){
+        res.send('No student found for this id!')
+    }
 
 
 });
 
 router.put('/:id/deregister', checkToken, (req,res)=>{
-    var courses = JSON.parse(fs.readFileSync(path));
-    let student = req.user.username;
+    const courseId = req.params.id;
+    const studentId= req.body.id;
+    const studentName = req.body.name;
+    let courses = JSON.parse(fs.readFileSync(path));
+    let students = JSON.parse(fs.readFileSync(studentPath));
     let curr_course;
-    const param = req.params
-    courses.forEach(course=>{
-        if (course.id==param.id){
-            curr_course=1
-            const student_index = course["enrolledStudents"].indexOf(student)
-            if (student_index !== -1){
-                course["enrolledStudents"].splice(student_index,1)
-                course["availableSlots"] += 1
-                fs.writeFileSync(path, JSON.stringify(courses, null, 2))
-                res.send('Student unregistered successfully')
-            }else{
-                res.send('No student with this id is enrolled in this course!')
+    let curr_student;
+    students.forEach(student =>{
+        if (student.id == studentId){
+            curr_student = 1
+            courses.forEach(course=>{
+                if (course.id==courseId){
+                    curr_course=1
+                    const student_index = course["enrolledStudents"].indexOf(studentId)
+                    if (student_index !== -1){
+                        course["enrolledStudents"].splice(student_index,1)
+                        course["availableSlots"] += 1
+                        fs.writeFileSync(path, JSON.stringify(courses, null, 2))
+                        res.send('Student unregistered successfully')
+                    }else{
+                        res.send('No student with this id is enrolled in this course!')
+                    }
+                }
+            })
+            if (!curr_course){
+                res.send('No course found for this id!')
             }
         }
     })
-    if (!curr_course){
-        res.send('No course found for this id!')
+    if (!curr_student){
+        res.send('No student found for this id!')
     }
-})
+
+});
 
 module.exports = router;
