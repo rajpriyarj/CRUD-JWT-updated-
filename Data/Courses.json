@@ -1,0 +1,16 @@
+[
+  {
+    "name": "me",
+    "description": "xyz",
+    "enrolledStudents": [],
+    "availableSlots": 0,
+    "id": 1
+  },
+  {
+    "name": "IT",
+    "description": "xyz",
+    "enrolledStudents": [],
+    "availableSlots": 10,
+    "id": 2
+  }
+]
