@@ -6,23 +6,15 @@
       {
         "id": 2,
         "name": "IRON MAN"
-      },
-      {
-        "id": 1,
-        "name": "Raj Priya"
       }
     ],
-    "availableSlots": 1,
+    "availableSlots": 2,
     "id": 1
   },
   {
     "name": "IT",
     "description": "xyz",
     "enrolledStudents": [
-      {
-        "id": 3,
-        "name": "Avengers"
-      },
       {
         "id": 3,
         "name": "Avengers"

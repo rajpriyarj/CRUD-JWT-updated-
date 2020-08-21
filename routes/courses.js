@@ -52,8 +52,8 @@ router.post('/:id/enroll', checkToken, (req,res)=>{
             courses.forEach(course=>{
                 if (course.id==courseId){
                     curr_course=1
-                    if (course["enrolledStudents"].indexOf(studentId) > -1) {
-                        console.log('here')
+                    const student_index = course["enrolledStudents"].findIndex(i => i.id === studentId);
+                    if (student_index > -1) {
                         res.send('Student already enrolled in this course!')
                     }else{
                         if (course["availableSlots"]>0){
@@ -96,7 +96,8 @@ router.put('/:id/deregister', checkToken, (req,res)=>{
             courses.forEach(course=>{
                 if (course.id==courseId){
                     curr_course=1
-                    const student_index = course["enrolledStudents"].indexOf(studentId)
+                    //const student_index = course["enrolledStudents"].indexOf(studentId)
+                    const student_index = course["enrolledStudents"].findIndex(i => i.id === studentId);
                     if (student_index !== -1){
                         course["enrolledStudents"].splice(student_index,1)
                         course["availableSlots"] += 1
@@ -117,5 +118,6 @@ router.put('/:id/deregister', checkToken, (req,res)=>{
     }
 
 });
+
 
 module.exports = router;
